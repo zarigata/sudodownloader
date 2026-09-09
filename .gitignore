@@ -1,0 +1,16 @@
+# downloaded music & build artifacts
+suno_downloads/
+*.part
+*.dmg
+dmg-staging/
+
+# python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# os junk
+.DS_Store
+Thumbs.db
+.zcode/

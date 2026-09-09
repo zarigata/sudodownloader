@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Suno Playlist Downloader — Download every track from any Suno AI playlist (free, no login)</title>
+<meta name="description" content="Free open-source Suno downloader. Download all songs from any public Suno AI playlist to MP3/M4A — no account, no login, no download limits. Works on macOS, Windows and Linux.">
+<meta name="keywords" content="suno downloader, suno ai downloader, download suno songs, suno playlist downloader, suno to mp3, suno batch download, suno download limit bypass, free suno downloader, no login suno, ai music downloader, suno m4a, suno playlist export">
+<meta name="author" content="zarigata">
+<link rel="canonical" href="https://zarigata.github.io/sudodownloader/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Suno Playlist Downloader">
+<meta property="og:title" content="Suno Playlist Downloader — every track, no login, no limits">
+<meta property="og:description" content="Paste a public Suno playlist link and get all your songs as audio files. Free, open source, macOS/Windows/Linux.">
+<meta property="og:url" content="https://zarigata.github.io/sudodownloader/">
+<meta property="og:image" content="https://zarigata.github.io/sudodownloader/assets/demo.svg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Suno Playlist Downloader — free, no login, no limits">
+<meta name="twitter:description" content="Download every track from any public Suno AI playlist. Open source, cross-platform.">
+<meta name="twitter:image" content="https://zarigata.github.io/sudodownloader/assets/demo.svg">
+<meta name="theme-color" content="#9333ea">
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Suno Playlist Downloader",
+  "operatingSystem": "macOS, Windows, Linux",
+  "applicationCategory": "MultimediaApplication",
+  "description": "Free open-source tool to download every track from any public Suno AI playlist — no account, no login, no download limits.",
+  "url": "https://zarigata.github.io/sudodownloader/",
+  "softwareVersion": "1.1.0",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "author": { "@type": "Person", "name": "zarigata", "url": "https://zarigata.com" },
+  "license": "https://github.com/zarigata/sudodownloader/blob/main/LICENSE"
+}
+</script>
+<style>
+  :root{
+    --bg:#0d0b1a; --panel:#161228; --ink:#efeaff; --dim:#a99fd0;
+    --violet:#9333ea; --blue:#2563eb; --gold:#fbbf24; --green:#10b981;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Inter,sans-serif;
+       background:radial-gradient(1200px 600px at 70% -10%,#3b1d6e55,transparent),
+                  radial-gradient(900px 500px at 10% 110%,#1d2d6e44,transparent),var(--bg);
+       color:var(--ink);line-height:1.6}
+  .wrap{max-width:980px;margin:0 auto;padding:0 24px}
+  header{text-align:center;padding:72px 0 36px}
+  header img.logo{width:140px;filter:drop-shadow(0 12px 40px #9333ea55)}
+  h1{font-size:clamp(1.9rem,4.5vw,3.1rem);margin:.4em 0 .2em;letter-spacing:-.02em}
+  h1 .cross{color:var(--gold)}
+  .tag{font-size:1.15rem;color:var(--dim);max-width:640px;margin:0 auto 8px}
+  .byline{color:var(--dim);font-size:.95rem}
+  .byline a{color:var(--gold);text-decoration:none}
+  .cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:26px}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:14px 26px;border-radius:14px;
+       font-weight:700;text-decoration:none;font-size:1.02rem;transition:transform .15s ease, box-shadow .15s ease}
+  .btn:hover{transform:translateY(-2px)}
+  .btn-primary{background:linear-gradient(135deg,var(--violet),var(--blue));color:#fff;
+       box-shadow:0 10px 30px #9333ea55}
+  .btn-ghost{border:1px solid #4c3f7a;color:var(--ink);background:#1a1530cc}
+  .badges{margin-top:22px}
+  .badges img{margin:0 3px}
+  .demo{margin:26px auto 0;max-width:760px;border-radius:16px;overflow:hidden;
+        box-shadow:0 30px 80px #00000066;border:1px solid #2c2350}
+  section{padding:44px 0}
+  h2{font-size:1.7rem;margin:0 0 18px;letter-spacing:-.01em}
+  h2 .n{color:var(--violet);margin-right:.4em}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+  .card{background:var(--panel);border:1px solid #2c2350;border-radius:16px;padding:20px 22px}
+  .card h3{margin:0 0 8px;font-size:1.08rem}
+  .card p{margin:0;color:var(--dim);font-size:.95rem}
+  .card .ic{font-size:1.5rem}
+  code,kbd{background:#1c1836;border:1px solid #372c63;border-radius:8px;padding:2px 8px;
+       font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+  pre{background:#12102a;border:1px solid #2c2350;border-radius:14px;padding:18px 20px;overflow:auto}
+  pre code{background:none;border:none;padding:0;font-size:.9rem;color:#cfc4f5}
+  ol.steps{padding-left:0;list-style:none;counter-reset:s}
+  ol.steps li{counter-increment:s;position:relative;padding:10px 0 10px 56px}
+  ol.steps li::before{content:counter(s);position:absolute;left:0;top:8px;width:38px;height:38px;
+       display:grid;place-items:center;border-radius:12px;font-weight:800;
+       background:linear-gradient(135deg,var(--violet),var(--blue));color:#fff}
+  details{background:var(--panel);border:1px solid #2c2350;border-radius:14px;
+          padding:14px 18px;margin:10px 0}
+  summary{cursor:pointer;font-weight:700}
+  details p{color:var(--dim);margin:.5em 0 0}
+  footer{border-top:1px solid #241d45;margin-top:30px;padding:36px 0 60px;text-align:center;color:var(--dim)}
+  footer a{color:var(--gold);text-decoration:none}
+  .dox{font-size:1.05rem;color:var(--ink);margin-top:10px}
+  .toc{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:8px}
+  .toc a{color:var(--dim);text-decoration:none;border:1px solid #2c2350;border-radius:999px;padding:6px 14px;font-size:.9rem}
+  .toc a:hover{color:var(--ink);border-color:var(--violet)}
+  .kicker{text-align:center;color:var(--violet);font-weight:800;letter-spacing:.18em;
+          text-transform:uppercase;font-size:.8rem;margin:0 0 10px}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+<header>
+  <img class="logo" src="assets/logo.svg" alt="Suno Playlist Downloader logo">
+  <p class="kicker">free · open source · no login</p>
+  <h1><span class="cross">☩</span> Suno Playlist Downloader</h1>
+  <p class="tag"><strong>Download every track from any public Suno&nbsp;AI playlist</strong> — your songs, your files. No account, no password, no 20-downloads-a-month wall.</p>
+  <p class="byline">built with faith by <a href="https://zarigata.com">zarigata</a> · «Glory to Jesus Christ!» 🕊️</p>
+  <div class="cta">
+    <a class="btn btn-primary" href="https://github.com/zarigata/sudodownloader/releases">⬇&nbsp; Download for free</a>
+    <a class="btn btn-ghost" href="https://github.com/zarigata/sudodownloader">★&nbsp; Star on GitHub</a>
+  </div>
+  <div class="badges">
+    <img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-2563eb.svg">
+    <img alt="Python 3.9+" src="https://img.shields.io/badge/python-3.9%2B-3776ab.svg">
+    <img alt="Platforms" src="https://img.shields.io/badge/platforms-macOS%20%7C%20Windows%20%7C%20Linux-10b981.svg">
+  </div>
+  <div class="demo"><img src="assets/demo.svg" alt="Terminal demo: paste a Suno playlist link and every track downloads with a live progress bar" style="width:100%;display:block"></div>
+  <nav class="toc">
+    <a href="#features">Features</a><a href="#start">Quick start</a>
+    <a href="#how">How it works</a><a href="#faq">FAQ</a><a href="#why">Why</a>
+  </nav>
+</header>
+
+<section id="features">
+  <h2><span class="n">✦</span>Everything it does</h2>
+  <div class="grid">
+    <div class="card"><h3><span class="ic">🔓</span> No account, no limits</h3><p>Works with the public playlist link alone — no login, no password, no download quota. 5 songs or 500.</p></div>
+    <div class="card"><h3><span class="ic">🖱️</span> Double-click simple</h3><p>macOS <code>.dmg</code>, Windows <code>.bat</code> and Linux launcher. Paste a link, press Enter, watch it fill.</p></div>
+    <div class="card"><h3><span class="ic">🎵</span> Real audio files</h3><p>Saves <code>.m4a</code> exactly as Suno streams it, numbered in playlist order; optional <code>--mp3</code> conversion via ffmpeg.</p></div>
+    <div class="card"><h3><span class="ic">🐢</span> Respectful &amp; resumable</h3><p>One track at a time with human-like pauses, stops instantly if Suno says slow down, skips files you already have.</p></div>
+    <div class="card"><h3><span class="ic">🛡️</span> IP-friendly</h3><p>Traffic looks like one person listening to the playlist once. Route through your own VPN with <code>--proxy</code>.</p></div>
+    <div class="card"><h3><span class="ic">🧩</span> Power-user CLI</h3><p>Multiple playlists at once, custom output folder, overwrite control — plus the friendly interactive mode.</p></div>
+  </div>
+</section>
+
+<section id="start">
+  <h2><span class="n">➊</span>Quick start</h2>
+  <div class="grid">
+    <div class="card">
+      <h3>macOS — easiest</h3>
+      <ol class="steps">
+        <li>Get <code>Suno-Playlist-Downloader-macOS.dmg</code> from Releases</li>
+        <li>Drag the folder to your Desktop, open it</li>
+        <li>Double-click <b>Start Suno Downloader.command</b></li>
+        <li>Paste your playlist link → Enter → Enter</li>
+      </ol>
+      <p>Music lands in <b>Music → Suno Downloads</b>.</p>
+    </div>
+    <div class="card">
+      <h3>Windows</h3>
+      <ol class="steps">
+        <li>Code → <b>Download ZIP</b>, unzip</li>
+        <li>Double-click <b>Start Suno Downloader.bat</b></li>
+        <li>First run sets itself up (opens python.org if needed)</li>
+        <li>Paste your playlist link → Enter → Enter</li>
+      </ol>
+      <p>Music lands in <code>suno_downloads/</code> next to the script.</p>
+    </div>
+    <div class="card">
+      <h3>Linux / terminal</h3>
+      <pre><code>git clone https://github.com/zarigata/sudodownloader.git
+cd sudodownloader
+./start-linux.sh "https://suno.com/playlist/&lt;id&gt;"</code></pre>
+      <p>Or <code>python3 suno_dl.py</code> for the interactive mode.</p>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <h2><span class="n">⚙</span>How it works — and why it's gentle</h2>
+  <div class="card">
+    <p>Suno playlists that are shared publicly play in anyone's browser. This tool makes exactly the same requests a browser makes when a guest listener presses play: one public metadata call for the playlist, then per track one keys request (Suno serves audio encrypted at rest; the keys are granted to anonymous listeners) and one file fetch — decrypted <b>locally on your machine</b>, verified as real audio, saved. Sequential, randomized pauses, hard stop on any 403/429. Nothing uploaded, no account touched.</p>
+  </div>
+</section>
+
+<section id="faq">
+  <h2><span class="n">?</span>FAQ</h2>
+  <details><summary>Where are my files?</summary><p><code>Music/Suno Downloads</code> (macOS launcher) or <code>suno_downloads/&lt;playlist&gt;/</code> next to the script, numbered <code>01 - Song.m4a</code>… in playlist order.</p></details>
+  <details><summary>Why .m4a and not .mp3?</summary><p>Suno no longer serves mp3s at all — everything is m4a (Opus) behind the download button. m4a plays everywhere modern; add <code>--mp3</code> (with ffmpeg) to convert.</p></details>
+  <details><summary>Does it need my Suno login?</summary><p>No. No email, no password, no cookies — just the public playlist link.</p></details>
+  <details><summary>Will my IP get flagged?</summary><p>The tool is deliberately gentle and stops instantly if Suno signals to slow down. Use <code>--proxy</code> to route through your VPN.</p></details>
+  <details><summary>It says “Playlist not found”.</summary><p>The playlist must be public: in Suno open the playlist → ⋯ → share/public, then copy the link again.</p></details>
+  <details><summary>Can it download someone else's songs?</summary><p>It works with any public link — use it for your own music and what's shared with you. Bulk-downloading strangers' work may conflict with Suno's Terms of Service.</p></details>
+  <details><summary>Is it really free?</summary><p>MIT-licensed open source. ✝ Free as a gift — pass it on.</p></details>
+</section>
+
+<section id="why">
+  <h2><span class="n">🃏</span>Why I built it</h2>
+  <div class="card">
+    <p>You craft fifty songs with your own two hands, and one day a polite little counter appears — <b>20 downloads a month</b>. A circus tent, a velvet rope, and a clown in a suit smiling down at you: <i>“these were never really yours, you know.”</i></p>
+    <p style="font-size:1.25rem;margin:.6em 0"><b>FUCK YOU SUNO.</b></p>
+    <p>They're my songs. So I stitched this little joker of a script together, splashed a match on the quota, and now I hand fire to everyone who walks past. Not for money. Not for fame. I just want to lean back with popcorn and watch the big-top of download limits burn down while the music keeps playing. 🔥🎪</p>
+    <p><b>“I just want to watch the world burn.” — some guy in face paint</b></p>
+    <p>Use it. Share it. Pass the matches. 🕊️</p>
+    <p class="dox">Δόξα τῷ Θεῷ πάντων ἕνεκεν — Glory to God for all things!</p>
+  </div>
+</section>
+
+<footer>
+  <p><a href="https://zarigata.com">zarigata.com</a> · <a href="https://github.com/zarigata">GitHub</a> · MIT License</p>
+  <p>Suno Playlist Downloader is an independent open-source project, not affiliated with Suno.</p>
+  <p class="dox">☩ ☩ ☩</p>
+</footer>
+</div>
+
+</body>
+</html>

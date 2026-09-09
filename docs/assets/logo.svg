@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="Suno Playlist Downloader logo">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#6d28d9"/>
+      <stop offset="0.55" stop-color="#9333ea"/>
+      <stop offset="1" stop-color="#2563eb"/>
+    </linearGradient>
+    <linearGradient id="note" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#e9d5ff"/>
+    </linearGradient>
+  </defs>
+  <rect x="4" y="4" width="192" height="192" rx="44" fill="url(#bg)"/>
+  <!-- download tray -->
+  <path d="M56 118 h88" stroke="#ffffff" stroke-width="10" stroke-linecap="round" opacity="0.95"/>
+  <path d="M100 74 v40 m0 0 l-20 -18 m20 18 l20 -18" stroke="#ffffff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <!-- music note -->
+  <g transform="translate(122 44) rotate(14)">
+    <ellipse cx="-13" cy="26" rx="13" ry="9.5" fill="url(#note)" transform="rotate(-14 -13 26)"/>
+    <rect x="-1" y="-26" width="6.5" height="50" rx="3" fill="url(#note)"/>
+    <path d="M-1 -26 q16 2 20 14 q1.5 4 -3 3.5 q-4 -0.5 -5.5 -4.5 q-2 -6 -11.5 -7 z" fill="url(#note)"/>
+  </g>
+  <!-- small gold cross -->
+  <g transform="translate(46 40)" stroke="#fbbf24" stroke-width="6" stroke-linecap="round">
+    <line x1="0" y1="-10" x2="0" y2="10"/>
+    <line x1="-7" y1="-3" x2="7" y2="-3"/>
+  </g>
+</svg>
