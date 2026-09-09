@@ -120,7 +120,11 @@ polite little counter appears — *20 downloads a month.* A circus tent, a
 velvet rope, and a clown in a suit smiling down at you: *"these were never
 really yours, you know."*
 
-**FUCK YOU SUNO.**
+<p align="center">
+  <img src="assets/fuckyousuno.svg" width="820" alt="FUCK YOU SUNO — huge animated rainbow letters with five dancing middle fingers"/>
+</p>
+
+*(yes, we said it. no, we're not sorry.)*
 
 They're my songs. I made them. So I stitched this little joker of a script
 together, splashed a match on the quota, and now I'm handing fire to everyone

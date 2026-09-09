@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="340" viewBox="0 0 1200 340" role="img" aria-label="FUCK YOU SUNO">
+  <title>FUCK YOU SUNO</title>
+  <defs>
+    <linearGradient id="rainbow" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="600" y2="0" spreadMethod="repeat">
+      <stop offset="0"    stop-color="#ff004c"/>
+      <stop offset=".17"  stop-color="#ff8a00"/>
+      <stop offset=".33"  stop-color="#ffe600"/>
+      <stop offset=".5"   stop-color="#2bff5c"/>
+      <stop offset=".67"  stop-color="#00cfff"/>
+      <stop offset=".83"  stop-color="#8a5cff"/>
+      <stop offset="1"    stop-color="#ff00d4"/>
+      <animateTransform attributeName="gradientTransform" type="translate" from="0 0" to="600 0" dur="2.6s" repeatCount="indefinite"/>
+    </linearGradient>
+  </defs>
+  <style>
+    .t { font-family:'Arial Black','Arial Bold',Arial,Helvetica,sans-serif;
+         font-weight:900;font-size:100px;letter-spacing:-2px;text-anchor:middle }
+    .shadow { fill:#000;opacity:.38;transform:translate(5px,7px) }
+    .main { fill:url(#rainbow) }
+    .outline { fill:none;stroke:#ffffff33;stroke-width:2 }
+    .finger { font-family:'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif;
+              font-size:86px;text-anchor:middle;
+              animation:wobble .75s ease-in-out infinite alternate;
+              transform-box:fill-box;transform-origin:50% 88% }
+    .bounce { animation:bounce .55s ease-in-out infinite alternate;
+              transform-box:fill-box }
+    .d1 .finger{animation-delay:.14s} .d1{animation-delay:.07s}
+    .d2 .finger{animation-delay:.28s} .d2{animation-delay:.14s}
+    .d3 .finger{animation-delay:.42s} .d3{animation-delay:.21s}
+    .d4 .finger{animation-delay:.07s} .d4{animation-delay:.28s}
+    .flip { transform:scaleX(-1);transform-box:fill-box }
+    @keyframes bounce { to { transform:translateY(-34px) } }
+    @keyframes wobble { from { transform:rotate(-17deg) } to { transform:rotate(17deg) } }
+    @media (prefers-reduced-motion: reduce) {
+      .finger,.bounce { animation:none }
+    }
+  </style>
+
+  <!-- FUCK YOU SUNO -->
+  <text class="t shadow" x="600" y="150">FUCK YOU SUNO</text>
+  <text class="t main"   x="600" y="150">FUCK YOU SUNO</text>
+  <text class="t outline" x="600" y="150">FUCK YOU SUNO</text>
+
+  <!-- the dancing jury (bounce → flip → wobble nested so transforms compose) -->
+  <g class="bounce"><g class="flip"><text class="finger" x="220" y="316">🖕</text></g></g>
+  <g class="bounce d1"><text class="finger" x="410" y="316">🖕</text></g>
+  <g class="bounce d2"><g class="flip"><text class="finger" x="600" y="316">🖕</text></g></g>
+  <g class="bounce d3"><text class="finger" x="790" y="316">🖕</text></g>
+  <g class="bounce d4"><g class="flip"><text class="finger" x="980" y="316">🖕</text></g></g>
+</svg>

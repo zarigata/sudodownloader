@@ -93,6 +93,32 @@
   .toc a:hover{color:var(--ink);border-color:var(--violet)}
   .kicker{text-align:center;color:var(--violet);font-weight:800;letter-spacing:.18em;
           text-transform:uppercase;font-size:.8rem;margin:0 0 10px}
+  /* 🃏 the big one */
+  .fu{font-size:clamp(2.6rem,7.5vw,5rem);font-weight:900;letter-spacing:.01em;
+      margin:.45em 0 .15em;text-align:center;line-height:1.05;
+      background:linear-gradient(90deg,#ff004c,#ff8a00,#ffe600,#2bff5c,#00cfff,#8a5cff,#ff00d4,#ff004c);
+      background-size:300% 100%;-webkit-background-clip:text;background-clip:text;
+      color:transparent;-webkit-text-fill-color:transparent;
+      filter:drop-shadow(0 6px 26px #ff00d455);
+      animation:rainbowslide 2.6s linear infinite}
+  @keyframes rainbowslide{to{background-position:300% 0}}
+  .fingers{text-align:center;margin:.2em 0 .5em;line-height:1.2}
+  .fingers span{display:inline-block;font-size:clamp(2rem,4.5vw,3rem);margin:0 .22em;
+      animation:dance .55s ease-in-out infinite alternate,wob .78s ease-in-out infinite alternate;
+      transform-origin:50% 85%}
+  .fingers span:nth-child(2){animation-delay:.07s,.14s}
+  .fingers span:nth-child(3){animation-delay:.14s,.28s}
+  .fingers span:nth-child(4){animation-delay:.21s,.42s}
+  .fingers span:nth-child(5){animation-delay:.28s,.07s}
+  .fingers span:nth-child(6){animation-delay:.35s,.21s}
+  .fingers span:nth-child(7){animation-delay:.42s,.35s}
+  @keyframes dance{to{transform:translateY(-26px) scale(1.06)}}
+  @keyframes wob{from{transform:rotate(-16deg)}to{transform:rotate(16deg)}}
+  /* mirrored fingers get their own keyframes so the flip survives the dance */
+  .fingers span:nth-child(odd){animation-name:danceflip,wobflip}
+  @keyframes danceflip{from{transform:scale(-1,1)}to{transform:translateY(-26px) scale(-1.06,1.06)}}
+  @keyframes wobflip{from{transform:scaleX(-1) rotate(-16deg)}to{transform:scaleX(-1) rotate(16deg)}}
+  @media (prefers-reduced-motion:reduce){.fu,.fingers span{animation:none}}
 </style>
 </head>
 <body>
@@ -187,7 +213,9 @@ cd sudodownloader
   <h2><span class="n">🃏</span>Why I built it</h2>
   <div class="card">
     <p>You craft fifty songs with your own two hands, and one day a polite little counter appears — <b>20 downloads a month</b>. A circus tent, a velvet rope, and a clown in a suit smiling down at you: <i>“these were never really yours, you know.”</i></p>
-    <p style="font-size:1.25rem;margin:.6em 0"><b>FUCK YOU SUNO.</b></p>
+    <p class="fu" role="img" aria-label="FUCK YOU SUNO">FUCK YOU SUNO</p>
+    <p class="fingers" aria-hidden="true"><span>🖕</span><span>🖕</span><span>🖕</span><span>🖕</span><span>🖕</span><span>🖕</span><span>🖕</span></p>
+    <p><i>(yes, we said it. no, we're not sorry.)</i></p>
     <p>They're my songs. So I stitched this little joker of a script together, splashed a match on the quota, and now I hand fire to everyone who walks past. Not for money. Not for fame. I just want to lean back with popcorn and watch the big-top of download limits burn down while the music keeps playing. 🔥🎪</p>
     <p><b>“I just want to watch the world burn.” — some guy in face paint</b></p>
     <p>Use it. Share it. Pass the matches. 🕊️</p>
