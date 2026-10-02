@@ -351,6 +351,18 @@ def transcode_mp3(src: Path) -> Path:
     return dst
 
 
+def convert_if_wanted(dest: Path, want_mp3: bool, title: str,
+                      console: Console) -> tuple:
+    """Turn a finished audio file into .mp3 if asked; returns (path, converted)."""
+    if not want_mp3:
+        return dest, False
+    try:
+        return transcode_mp3(dest), True
+    except RuntimeError as e:
+        console.print(f"\n[yellow]mp3 conversion failed for '{title}': {e}[/]")
+        return dest, False
+
+
 # --------------------------------------------------------------------------- #
 #  UI
 # --------------------------------------------------------------------------- #
@@ -482,11 +494,20 @@ def process_playlist(pid: str, args, console: Console) -> int:
                 continue
 
             dest = outdir / f"{num} - {sanitize_filename(title)}{ext}"
+            want_mp3 = bool(args.mp3 and ffmpeg and ext != ".mp3")
+            mp3_dest = dest.with_suffix(".mp3")
+            if want_mp3 and mp3_dest.exists() and not args.overwrite:
+                progress.advance(overall)
+                size = human_size(mp3_dest.stat().st_size)
+                results.append((num, title, "skipped", size))
+                continue
             if dest.exists() and not args.overwrite:
                 if is_playable_audio(dest):
+                    # already downloaded earlier — only convert if mp3 is wanted
+                    dest, converted = convert_if_wanted(dest, want_mp3, title, console)
                     progress.advance(overall)
                     size = human_size(dest.stat().st_size)
-                    results.append((num, title, "skipped", size))
+                    results.append((num, title, "converted" if converted else "skipped", size))
                     continue
                 # file exists but is still encrypted (e.g. interrupted run of
                 # an older version) — decrypt it in place, no re-download
@@ -498,8 +519,9 @@ def process_playlist(pid: str, args, console: Console) -> int:
                     dest.write_bytes(decrypt_bytes(blob, clip.get("id"), rights))
                     if not is_playable_audio(dest):
                         raise RuntimeError("decrypted file still invalid")
+                    dest, converted = convert_if_wanted(dest, want_mp3, title, console)
                     size = human_size(dest.stat().st_size)
-                    results.append((num, title, "decrypted", size))
+                    results.append((num, title, "converted" if converted else "decrypted", size))
                 except (BlockedError, RuntimeError, ValueError) as e:
                     if isinstance(e, BlockedError):
                         progress.remove_task(fix_task)
@@ -532,16 +554,9 @@ def process_playlist(pid: str, args, console: Console) -> int:
                 dest.write_bytes(decrypt_bytes(blob, clip.get("id"), rights))
                 if not is_playable_audio(dest):
                     raise RuntimeError("decrypted file has no audio header")
-                status = "downloaded"
-                if args.mp3 and ffmpeg:
-                    try:
-                        dest = transcode_mp3(dest)
-                        status = "converted"
-                    except RuntimeError as e:
-                        console.print(f"\n[yellow]mp3 conversion failed for "
-                                      f"'{title}': {e}[/]")
+                dest, converted = convert_if_wanted(dest, want_mp3, title, console)
                 size = human_size(dest.stat().st_size)
-                results.append((num, title, status, size))
+                results.append((num, title, "converted" if converted else "downloaded", size))
             except BlockedError:
                 progress.remove_task(file_task)
                 blocked = True
@@ -613,9 +628,9 @@ def main(argv=None) -> int:
     parser.add_argument("--proxy", metavar="URL",
                         help="route all traffic through a proxy/VPN, e.g. "
                              "socks5://127.0.0.1:1080 or http://host:8080")
-    parser.add_argument("--mp3", action="store_true",
-                        help="also convert downloads to .mp3 (needs ffmpeg; "
-                             "originals are .m4a)")
+    parser.add_argument("--mp3", action=argparse.BooleanOptionalAction, default=True,
+                        help="convert downloads to .mp3 (default: on, needs ffmpeg); "
+                             "use --no-mp3 to keep the original .m4a files")
     parser.add_argument("--verbose", action="store_true")
     parser.add_argument("--version", action="version",
                         version=f"%(prog)s {__version__}")
