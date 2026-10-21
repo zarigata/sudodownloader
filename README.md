@@ -32,7 +32,7 @@ Suno is wonderful — but since **September 2026 it caps downloads** (20/month o
 
 - ✝ **No account, no login, no password** — it works with the public share link
 - ✝ **No download limit** — 5 songs or 500, playlists of 50 tracks each, several links at once
-- ✝ **Real audio files** — `.m4a` exactly as Suno streams them, optional `--mp3` conversion
+- ✝ **Real audio files** — `.m4a` exactly as Suno streams them, converted to `.mp3` by default (`--no-mp3` keeps the `.m4a`)
 - ✝ **Beginner-friendly** — double-click launcher on Windows & macOS, paste a link, done
 - ✝ **Respectful by design** — polite pacing, one track at a time, stops instantly if asked to slow down, optional VPN/proxy routing
 - ✝ **Resumes** — interrupt any time; already-downloaded tracks are skipped on the next run
@@ -63,7 +63,7 @@ cd sudodownloader
 ```bash
 pip install -r requirements.txt          # requests, rich, cryptography
 python3 suno_dl.py                       # interactive paste-a-link mode
-python3 suno_dl.py <playlist-url> --mp3  # CLI mode, convert to mp3
+python3 suno_dl.py <playlist-url> --no-mp3  # CLI mode, keep original m4a
 ```
 
 ## 🖥️ Command-line reference
@@ -75,7 +75,7 @@ python3 suno_dl.py <playlist-url> --mp3  # CLI mode, convert to mp3
 | `--delay SEC` | Base pause between downloads (default 2 s, jittered up to 2×) |
 | `--overwrite` | Re-download tracks that already exist |
 | `--proxy URL` | Route all traffic through a VPN/proxy, e.g. `socks5://127.0.0.1:1080` |
-| `--mp3` | Convert downloads to `.mp3` (needs [ffmpeg](https://ffmpeg.org)) |
+| `--mp3` / `--no-mp3` | Convert downloads to `.mp3` — **on by default** (needs [ffmpeg](https://ffmpeg.org)); `--no-mp3` keeps the original `.m4a` |
 | `--verbose` | More detail |
 | `--version` | Print version and go |
 
@@ -93,7 +93,7 @@ No credentials, no cookies, no account is ever touched, nothing is uploaded. The
 `Music/Suno Downloads` (macOS launcher) or `suno_downloads/<playlist name>/` next to the script, numbered in playlist order.
 
 **Why `.m4a` and not `.mp3`?**
-Suno no longer serves mp3s at all — everything is m4a (Opus) behind the download button. m4a plays in iTunes/Music, VLC, Windows Media Player, and every phone. Add `--mp3` to convert (needs ffmpeg).
+Suno no longer serves mp3s at all — everything is m4a (Opus) behind the download button. m4a plays in iTunes/Music, VLC, Windows Media Player, and every phone. The tool converts to mp3 by default when ffmpeg is installed; add `--no-mp3` to keep the m4a files.
 
 **Does it need my Suno login?**
 No. No email, no password, no cookies — just the public playlist link.
